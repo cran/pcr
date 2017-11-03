@@ -1,4 +1,4 @@
-81bd81e100f67ec265850236c6c09272 *DESCRIPTION
+82484e372dc199bd3997f4dc8ceb863e *DESCRIPTION
 55c04560533cf6275b8de31efd85efef *NAMESPACE
 4cefd7c656f462cf068405ca4e3fdbd7 *NEWS.md
 23f2dd10b5f0c5e5541fef63c55d47db *R/analyses_fun.R
@@ -15,7 +15,7 @@ f506179d0421ae2a870ed14268fbbc74 *R/testing_fun.R
 2ed2c0fdfab6b68675e68f734b59f6d3 *data/ct4.rda
 236fb05e00289b9cd684674bed4c9974 *inst/doc/qpcr_analysis.R
 7c62e5ffce4b0197ef2d3e6c381e8c1e *inst/doc/qpcr_analysis.Rmd
-1307a566cb81d842360243c94b22c38d *inst/doc/qpcr_analysis.pdf
+458737915d63f9f81d08ba49dbc30869 *inst/doc/qpcr_analysis.pdf
 2ca830f4ca45b10974082bd5c2709f09 *inst/extdata/ct1.csv
 795cac6df1881f2e7879a2c8ee19a43b *inst/extdata/ct2.csv
 e3b44cdffd971d1de4e20ce496ca61cf *inst/extdata/ct3.csv
