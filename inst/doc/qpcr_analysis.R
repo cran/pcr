@@ -1,13 +1,13 @@
 ## ----setup, include=FALSE------------------------------------------------
 knitr::opts_chunk$set(error = FALSE, message = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 3.5, fig.pos = 'H')
 
-## ----install_master, eval=FALSE------------------------------------------
-#  # install package from github (under development)
-#  devtools::install_github('MahShaaban/pcr')
+## ----install_CRAN, eval=FALSE--------------------------------------------
+#  # install package CRAN
+#  install.packages('pcr')
 
-## ----install_develop, eval=FALSE-----------------------------------------
-#  # install package from github (under development)
-#  devtools::install_github('MahShaaban/pcr@develop')
+## ----install_github, eval=FALSE------------------------------------------
+#  # install package from github
+#  devtools::install_github('MahShaaban/pcr')
 
 ## ----load_pcr------------------------------------------------------------
 # load required libraries
@@ -84,7 +84,7 @@ res <- pcr_assess(ct3,
                   amount = amount,
                   method = 'standard_curve')
 knitr::kable(res, 
-             caption = '\\label{table:table8}Standard curves of c-myc and GAPDH')
+             caption = '\\label{table:table8} Standard curves of c-myc and GAPDH')
 
 ## ----retain_variable-----------------------------------------------------
 intercept <- res$intercept
@@ -129,16 +129,21 @@ res2 <- pcr_analyze(ct2,
 knitr::kable(res2, caption = '\\label{table:table10} Double delta $C_T$ method (same tube)')
 
 ## ----plot_ddct_separate_tube---------------------------------------------
-gg1 <- ggplot(res1, aes(x = group, y = relative_expression)) +
-  geom_col(width = .7) +
-  geom_errorbar(aes(ymin = lower, ymax = upper), width = .5) +
+gg1 <- pcr_analyze(ct1,
+  group_var = group_var,
+  reference_gene = 'GAPDH',
+  reference_group = 'brain',
+  plot = TRUE) +
   labs(x = '', y = 'Relative mRNA expression') +
   ggtitle(label = 'Separate tubes')
 
 ## ----plote_ddct_same_tube------------------------------------------------
-gg2 <- ggplot(res2, aes(x = group, y = relative_expression)) +
-  geom_col(width = .7) +
-  geom_errorbar(aes(ymin = lower, ymax = upper), width = .5) +
+gg2 <- pcr_analyze(ct2,
+  group_var = group_var,
+  reference_gene = 'GAPDH',
+  reference_group = 'brain',
+  mode = 'same_tube',
+  plot = TRUE) +
   labs(x = '', y = 'Relative mRNA expression') +
   ggtitle(label = 'Same tubes')
 
@@ -171,9 +176,11 @@ res <- pcr_analyze(pcr_hk,
 knitr::kable(res, caption = '\\label{table:table11} Delta $C_T$ method')
 
 ## ----plot_dct_method, fig.cap='\\label{fig:fig4} GAPDH relative fold change using delta $C_T$'----
-ggplot(res, aes(x = group, y = fold_change, group = gene, fill = gene)) +
-  geom_col(position = 'dodge') +
-  geom_errorbar(aes(ymin = lower, ymax = upper, group = gene)) +
+pcr_analyze(pcr_hk,
+            group_var = group_var,
+            reference_group = 'brain',
+            method = 'delta_ct', 
+            plot = TRUE) +
   theme(legend.position = 'top',
         legend.direction = 'horizontal') +
   labs(x = '', y = 'Relative fold change')
@@ -206,16 +213,27 @@ knitr::kable(res2,
              caption = '\\label{table:table13} Standard curve method (same tube)')
 
 ## ----plot_standard_separate_tube-----------------------------------------
-gg1 <- ggplot(res1, aes(x = group, y = calibrated)) +
-  geom_col() +
-  geom_errorbar(aes(ymin = lower, ymax = upper), width = .7) +
+gg1 <- pcr_analyze(ct1,
+                   group_var = group_var,
+                   reference_gene = 'GAPDH',
+                   reference_group = 'brain',
+                   intercept = intercept,
+                   slope = slope,
+                   method = 'relative_curve',
+                   plot = TRUE) +
   labs(x = '', y = 'Relative mRNA expression') +
   ggtitle(label = 'Separate tubes')
 
 ## ----plot_standard_same_tube---------------------------------------------
-gg2 <- ggplot(res2, aes(x = group, y = calibrated)) +
-  geom_col() +
-  geom_errorbar(aes(ymin = lower, ymax = upper), width = .7) +
+gg2 <- pcr_analyze(ct2,
+                   group_var = group_var,
+                   reference_gene = 'GAPDH',
+                   reference_group = 'brain',
+                   intercept = intercept,
+                   slope = slope,
+                   method = 'relative_curve',
+                   mode = 'same_tube',
+                   plot = TRUE) +
   labs(x = '', y = 'Relative mRNA expression') +
   ggtitle(label = 'Same tubes')
 

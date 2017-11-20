@@ -5,7 +5,7 @@
 \title{Calculate the delta_ct model}
 \usage{
 pcr_dct(df, group_var, reference_gene, reference_group,
-  mode = "separate_tube")
+  mode = "separate_tube", plot = FALSE, ...)
 }
 \arguments{
 \item{df}{A data.frame of \eqn{C_T} values with genes in the columns and samples
@@ -21,6 +21,10 @@ this variable should equal the number of rows of df}
 \item{mode}{A character string of; 'separate_tube' (default) or 'same_tube'.
 This is to indicate whether the different genes were run in separate or the
 same PCR tube}
+
+\item{plot}{A logical (default is FALSE)}
+
+\item{...}{Arguments passed to customize plot}
 }
 \value{
 A data.frame of 7 columns
@@ -34,6 +38,11 @@ A data.frame of 7 columns
   \item lower The lower interval of the fold_change
   \item upper The upper interval of the fold_change
 }
+When \code{plot} is TRUE, returns a bar graph of the fold change of
+the genes in the column and the groups in the column group. Error bars are
+drawn using the columns lower and upper. When more one gene are plotted the
+default in dodge bars. When the argument facet is TRUE a separate panel is
+ drawn for each gene.
 }
 \description{
 Uses the \eqn{C_T} values and a reference group to calculate the delta \eqn{C_T}
@@ -56,12 +65,26 @@ pcr_hk <- data.frame(
   GAPDH2 = ct1$GAPDH
   )
 
+# add grouping variable
 group_var <- rep(c('brain', 'kidney'), each = 6)
 
 # calculate caliberation
 pcr_dct(pcr_hk,
         group_var = group_var,
         reference_group = 'brain')
+
+# returns a plot
+pcr_dct(pcr_hk,
+        group_var = group_var,
+        reference_group = 'brain',
+        plot = TRUE)
+
+# returns a plot with facets
+pcr_dct(pcr_hk,
+        group_var = group_var,
+        reference_group = 'brain',
+        plot = TRUE,
+        facet = TRUE)
 
 }
 \references{

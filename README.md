@@ -2,6 +2,8 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/y9hfiwwc390cce28?svg=true)](https://ci.appveyor.com/project/MahShaaban/pcr)
 [![Build status](https://ci.appveyor.com/api/projects/status/y9hfiwwc390cce28/branch/master?svg=true)](https://ci.appveyor.com/project/MahShaaban/pcr/branch/master)
 [![Coverage Status](https://img.shields.io/codecov/c/github/MahShaaban/pcr/master.svg)](https://codecov.io/github/MahShaaban/pcr?branch=master)
+[![CRAN version](https://img.shields.io/badge/CRAN-v1.0.1-blue.svg)](https://CRAN.R-project.org/package=pcr) 
+![downloads](https://cranlogs.r-pkg.org/badges/grand-total/pcr)  
 
 # pcr  
 
@@ -11,18 +13,18 @@ Quantitative real-time PCR is an imprtant technique in medical and biomedical ap
 
 # Getting started 
 
-The `pcr` is available on github. To install it using `devtools`:  
+The `pcr` is available on CRAN. To install it, use:  
+
+```r
+# install package CRAN
+install.packages('pcr')
+```
+
+The development version of the package can be obtained through:  
 
 ```r
 # install package from github (under development)
 devtools::install_github('MahShaaban/pcr')
-```
-
-The development version of the package can be similarly obtained through:  
-
-```r
-# install package from github (under development)
-devtools::install_github('MahShaaban/pcr@develop')
 ```
 
 ```r

@@ -1,5 +1,5 @@
 Package: pcr
-Version: 1.0.1
+Version: 1.1.0
 Title: Analyzing Real-Time Quantitative PCR Data
 Description: Calculates the amplification efficiency and curves from real-time 
   quantitative PCR (Polymerase Chain Reaction) data. Estimates the relative 
@@ -22,7 +22,7 @@ Suggests: testthat, knitr, rmarkdown, covr, cowplot
 VignetteBuilder: knitr
 License: GPL-3
 NeedsCompilation: no
-Packaged: 2017-11-03 10:29:31 UTC; MahShaaban
+Packaged: 2017-11-20 12:43:49 UTC; ma7moud_sha3ban
 Author: Mahmoud Ahmed [aut, cre]
 Repository: CRAN
-Date/Publication: 2017-11-03 12:13:54 UTC
+Date/Publication: 2017-11-20 12:52:35 UTC

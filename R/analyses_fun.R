@@ -13,6 +13,8 @@
 #' @param mode A character string of; 'separate_tube' (default) or 'same_tube'.
 #' This is to indicate whether the different genes were run in separate or the
 #' same PCR tube
+#' @param plot A logical (default is FALSE)
+#' @param ... Arguments passed to customize plot
 #'
 #' @return A data.frame of 8 columns:
 #' \itemize{
@@ -28,6 +30,11 @@
 #'   \item lower The lower interval of the relative_expression
 #'   \item upper The upper interval of the relative_expression
 #' }
+#' When \code{plot} is TRUE, returns a bar graph of the relative expression of
+#' the genes in the column and the groups in the column group. Error bars are
+#' drawn using the columns lower and upper. When more one gene are plotted the
+#' default in dodge bars. When the argument facet is TRUE a separate panel is
+#'  drawn for each gene.
 #'
 #' @details The comparative \eqn{C_T} methods assume that the cDNA templates of the
 #'  gene/s of interest as well as the control/reference gene have similar
@@ -37,7 +44,7 @@
 #'   each cycle. Another assumptions is that, the expression difference between
 #'   two genes or two samples can be captured by subtracting one (gene or
 #'   sample of interest) from another (reference).  This final assumption
-#'   requires also that these references doesn't change with the treatment or
+#'   requires also that these references don't change with the treatment or
 #'   the course in question.
 #'
 #' @examples
@@ -54,13 +61,20 @@
 #'          reference_gene = 'GAPDH',
 #'          reference_group = 'brain')
 #'
+#' # return a plot
+#' pcr_ddct(ct1,
+#'          group_var = group_var,
+#'          reference_gene = 'GAPDH',
+#'          reference_group = 'brain',
+#'          plot = TRUE)
+#'
 #' @importFrom magrittr %>%
 #' @importFrom tidyr gather
 #' @importFrom dplyr mutate full_join
 #'
 #' @export
 pcr_ddct <- function(df, group_var, reference_gene, reference_group,
-                     mode = 'separate_tube') {
+                     mode = 'separate_tube', plot = FALSE, ...) {
   # calculate the delta_ct
   if(mode == 'separate_tube') {
     # calculate average ct and normalize
@@ -97,7 +111,14 @@ pcr_ddct <- function(df, group_var, reference_gene, reference_group,
     mutate(lower = 2 ^ -(calibrated + error),
            upper = 2 ^ -(calibrated - error))
 
-  return(res)
+  # return
+  # return plot when plot == TRUE
+  if(plot == TRUE) {
+    gg <- .pcr_plot_analyze(res, method = 'delta_delta_ct', ...)
+    return(gg)
+  } else {
+    return(res)
+  }
 }
 
 #' Calculate the delta_ct model
@@ -118,6 +139,11 @@ pcr_ddct <- function(df, group_var, reference_gene, reference_group,
 #'   \item lower The lower interval of the fold_change
 #'   \item upper The upper interval of the fold_change
 #' }
+#' When \code{plot} is TRUE, returns a bar graph of the fold change of
+#' the genes in the column and the groups in the column group. Error bars are
+#' drawn using the columns lower and upper. When more one gene are plotted the
+#' default in dodge bars. When the argument facet is TRUE a separate panel is
+#'  drawn for each gene.
 #'
 #' @details This method is a variation of the double delta \eqn{C_T} model,
 #' \code{\link{pcr_ddct}}. It can be used to calculate the fold change
@@ -140,7 +166,7 @@ pcr_ddct <- function(df, group_var, reference_gene, reference_group,
 #'   GAPDH2 = ct1$GAPDH
 #'   )
 #'
-## add grouping variable
+#' # add grouping variable
 #' group_var <- rep(c('brain', 'kidney'), each = 6)
 #'
 #' # calculate caliberation
@@ -148,13 +174,26 @@ pcr_ddct <- function(df, group_var, reference_gene, reference_group,
 #'         group_var = group_var,
 #'         reference_group = 'brain')
 #'
+#' # returns a plot
+#' pcr_dct(pcr_hk,
+#'         group_var = group_var,
+#'         reference_group = 'brain',
+#'         plot = TRUE)
+#'
+#' # returns a plot with facets
+#' pcr_dct(pcr_hk,
+#'         group_var = group_var,
+#'         reference_group = 'brain',
+#'         plot = TRUE,
+#'         facet = TRUE)
+#'
 #' @importFrom magrittr %>%
 #' @importFrom tidyr gather
 #' @importFrom dplyr mutate full_join
 #'
 #' @export
 pcr_dct <- function(df, group_var, reference_gene, reference_group,
-                    mode = 'separate_tube') {
+                    mode = 'separate_tube', plot = FALSE, ...) {
   if(mode == 'separate_tube') {
     # average ct and calibrate to a reference group
     ave <- .pcr_average(df, group_var = group_var)
@@ -185,7 +224,14 @@ pcr_dct <- function(df, group_var, reference_gene, reference_group,
     mutate(lower = 2 ^ -(calibrated + error),
            upper = 2 ^ -(calibrated - error))
 
-  return(res)
+  # return
+  # return plot when plot == TRUE
+  if(plot == TRUE) {
+    gg <- .pcr_plot_analyze(res, method = 'delta_ct', ...)
+    return(gg)
+  } else {
+    return(res)
+  }
 }
 
 #' Calculate the standard curve model
@@ -209,6 +255,11 @@ pcr_dct <- function(df, group_var, reference_gene, reference_group,
 #'   \item lower The lower interval of the normalized relative expression
 #'   \item upper The upper interval of the normalized relative expression
 #' }
+#' When \code{plot} is TRUE, returns a bar graph of the calibrated expression
+#' of the genes in the column and the groups in the column group. Error bars
+#' are drawn using the columns lower and upper. When more one gene are plotted
+#' the default in dodge bars. When the argument facet is TRUE a separate
+#' panel is drawn for each gene.
 #'
 #' @details this model doesn't assume perfect amplification but rather actively
 #' use the amplification in calculating the relative expression. So when the
@@ -254,12 +305,23 @@ pcr_dct <- function(df, group_var, reference_gene, reference_group,
 #'           intercept = intercept,
 #'           slope = slope)
 #'
+#' # returns a plot
+#' pcr_curve(ct1,
+#'           group_var = group,
+#'           reference_gene = 'GAPDH',
+#'           reference_group = 'brain',
+#'           intercept = intercept,
+#'           slope = slope,
+#'           plot = TRUE)
+#'
 #' @importFrom magrittr %>%
 #' @importFrom tidyr gather
 #' @importFrom dplyr full_join mutate
+#'
 #' @export
 pcr_curve <- function(df, group_var, reference_gene, reference_group,
-                      mode = 'separate_tube', intercept, slope) {
+                      mode = 'separate_tube', intercept, slope,
+                      plot = FALSE, ...) {
   # calculate the amount of rna in samples
   amounts <- .pcr_amount(df,
                         intercept = intercept,
@@ -303,7 +365,14 @@ pcr_curve <- function(df, group_var, reference_gene, reference_group,
            upper = calibrated + error,
            error = error * normalized)
 
-  return(res)
+  # return
+  # return plot when plot == TRUE
+  if(plot == TRUE) {
+    gg <- .pcr_plot_analyze(res, method = 'relative_curve', ...)
+    return(gg)
+  } else {
+    return(res)
+  }
 }
 
 #' Apply qPCR analysis methods
@@ -316,8 +385,8 @@ pcr_curve <- function(df, group_var, reference_gene, reference_group,
 #' 'relative_curve' for invoking a certain analysis model
 #' @param ... Arguments passed to the methods
 #'
-#' @return A data.frame. For details; \link{pcr_ddct}, \link{pcr_dct} and
-#' \link{pcr_curve}
+#' @return A data.frame by default, when \code{plot} is TRUE returns a plot.
+#' For details; \link{pcr_ddct}, \link{pcr_dct} and \link{pcr_curve}.
 #'
 #' @details The different analysis methods can be invoked using the
 #' argument method with 'delta_delta_ct' default, 'delta_ct' or
@@ -347,6 +416,14 @@ pcr_curve <- function(df, group_var, reference_gene, reference_group,
 #'             reference_group = 'brain',
 #'             method = 'delta_delta_ct')
 #'
+#' # return a plot
+#' pcr_analyze(ct1,
+#'             group_var = group_var,
+#'             reference_gene = 'GAPDH',
+#'             reference_group = 'brain',
+#'             method = 'delta_delta_ct',
+#'             plot = TRUE)
+#'
 #' # applying the delta ct method
 #' # make a data.frame of two identical columns
 #' pcr_hk <- data.frame(
@@ -354,11 +431,18 @@ pcr_curve <- function(df, group_var, reference_gene, reference_group,
 #'   GAPDH2 = ct1$GAPDH
 #'   )
 #'
-#' # calculate caliberation
+#' # calculate fold change
 #' pcr_analyze(pcr_hk,
 #'             group_var = group_var,
 #'             reference_group = 'brain',
 #'             method = 'delta_ct')
+#'
+#' # return a plot
+#' pcr_analyze(pcr_hk,
+#'             group_var = group_var,
+#'             reference_group = 'brain',
+#'             method = 'delta_ct',
+#'             plot = TRUE)
 #'
 #' # applying the standard curve method
 #' # locate and read file
@@ -381,6 +465,17 @@ pcr_curve <- function(df, group_var, reference_gene, reference_group,
 #'            intercept = intercept,
 #'            slope = slope,
 #'            method = 'relative_curve')
+#'
+#' # return a plot
+#' pcr_analyze(ct1,
+#'            group_var = group_var,
+#'            reference_gene = 'GAPDH',
+#'            reference_group = 'brain',
+#'            intercept = intercept,
+#'            slope = slope,
+#'            method = 'relative_curve',
+#'            plot = TRUE)
+#'
 #' @export
 pcr_analyze <- function(df, method = 'delta_delta_ct', ...) {
   switch(method,
