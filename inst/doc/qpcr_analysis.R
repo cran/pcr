@@ -1,5 +1,5 @@
 ## ----setup, include=FALSE------------------------------------------------
-knitr::opts_chunk$set(error = FALSE, message = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 3.5, fig.pos = 'H')
+knitr::opts_chunk$set(error = FALSE, message = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 3.5)
 
 ## ----install_CRAN, eval=FALSE--------------------------------------------
 #  # install package CRAN
@@ -64,10 +64,9 @@ res <- pcr_assess(ct3,
                   amount = amount,
                   reference_gene = 'GAPDH',
                   method = 'efficiency')
-knitr::kable(res, 
-             caption = '\\label{table:table7} amplification efficiency of c-myc')
+knitr::kable(res, caption = 'Figure 7: amplification efficiency of c-myc')
 
-## ----plot_efficiency, fig.cap='\\label{fig:fig1} Amplification efficiency of c-myc'----
+## ----plot_efficiency, fig.cap='Figure 1: Amplification efficiency of c-myc'----
 gg <- pcr_assess(ct3,
            amount = amount,
            reference_gene = 'GAPDH',
@@ -83,14 +82,13 @@ gg +
 res <- pcr_assess(ct3,
                   amount = amount,
                   method = 'standard_curve')
-knitr::kable(res, 
-             caption = '\\label{table:table8} Standard curves of c-myc and GAPDH')
+knitr::kable(res, caption = 'Figure 8: Standard curves of c-myc and GAPDH')
 
 ## ----retain_variable-----------------------------------------------------
 intercept <- res$intercept
 slope <- res$slope
 
-## ----plot_curves, fig.width=8, fig.cap='\\label{fig:fig2} Standard curve of c-myc and GAPDH'----
+## ----plot_curves, fig.width=8, fig.cap='Figure 2: Standard curve of c-myc and GAPDH'----
 gg <- pcr_assess(ct3,
            amount = amount,
            method = 'standard_curve',
@@ -114,8 +112,7 @@ res1 <- pcr_analyze(ct1,
   reference_gene = 'GAPDH',
   reference_group = 'brain')
 
-knitr::kable(res1,
-             caption = '\\label{table:table9} Double delta $C_T$ method (separate tubes)')
+knitr::kable(res1, caption = 'Figure 9: Double delta $C_T$ method (separate tubes)')
 
 ## ----ddct_same_tube------------------------------------------------------
 # calculate all values and errors in one step
@@ -126,7 +123,7 @@ res2 <- pcr_analyze(ct2,
   reference_group = 'brain',
   mode = 'same_tube')
 
-knitr::kable(res2, caption = '\\label{table:table10} Double delta $C_T$ method (same tube)')
+knitr::kable(res2, caption = 'Figure 10: Double delta $C_T$ method (same tube)')
 
 ## ----plot_ddct_separate_tube---------------------------------------------
 gg1 <- pcr_analyze(ct1,
@@ -147,7 +144,7 @@ gg2 <- pcr_analyze(ct2,
   labs(x = '', y = 'Relative mRNA expression') +
   ggtitle(label = 'Same tubes')
 
-## ----plot_expression, fig.width=8, fig.cap='\\label{fig:fig3} Relative expression of c-myc using double delta $C_T$'----
+## ----plot_expression, fig.width=8, fig.cap='Figure 3: Relative expression of c-myc using double delta $C_T$'----
 plot_grid(gg1, gg2)
 
 ## ----make_up_dataset-----------------------------------------------------
@@ -173,9 +170,9 @@ res <- pcr_analyze(pcr_hk,
             reference_group = 'brain',
             method = 'delta_ct')
 
-knitr::kable(res, caption = '\\label{table:table11} Delta $C_T$ method')
+knitr::kable(res, caption = 'Figure 11: Delta $C_T$ method')
 
-## ----plot_dct_method, fig.cap='\\label{fig:fig4} GAPDH relative fold change using delta $C_T$'----
+## ----plot_dct_method, fig.cap='Figure 4: GAPDH relative fold change using delta $C_T$'----
 pcr_analyze(pcr_hk,
             group_var = group_var,
             reference_group = 'brain',
@@ -195,8 +192,7 @@ res1 <- pcr_analyze(ct1,
                    slope = slope,
                    method = 'relative_curve')
 
-knitr::kable(res1, 
-             caption = '\\label{table:table12} Standard curve method (separate tubes)')
+knitr::kable(res1, caption = 'Figure 12: Standard curve method (separate tubes)')
 
 ## ----standard_same_tube--------------------------------------------------
 ## calculate standard amounts and error
@@ -209,8 +205,7 @@ res2 <- pcr_analyze(ct2,
                    method = 'relative_curve',
                    mode = 'same_tube')
 
-knitr::kable(res2, 
-             caption = '\\label{table:table13} Standard curve method (same tube)')
+knitr::kable(res2, caption = 'Figure 13: Standard curve method (same tube)')
 
 ## ----plot_standard_separate_tube-----------------------------------------
 gg1 <- pcr_analyze(ct1,
@@ -237,7 +232,7 @@ gg2 <- pcr_analyze(ct2,
   labs(x = '', y = 'Relative mRNA expression') +
   ggtitle(label = 'Same tubes')
 
-## ----plot_expression2, fig.width=8, fig.cap='\\label{fig:fig5} Relative expression of c-myc using the standard curve'----
+## ----plot_expression2, fig.width=8, fig.cap='Figure 5: Relative expression of c-myc using the standard curve'----
 plot_grid(gg1, gg2)
 
 ## ----testing_data--------------------------------------------------------
@@ -255,7 +250,7 @@ res <- pcr_analyze(ct4,
             reference_gene = 'ref',
             reference_group = 'control')
 
-## ----plot_testing data, fig.cap='\\label{fig:fig6} Relative expression of target gene using delta delta $C_T$'----
+## ----plot_testing data, fig.cap='Figure 6: Relative expression of target gene using delta delta $C_T$'----
 ggplot(res, aes(x = group, y = relative_expression)) +
   geom_col() +
   labs(x = '', y = 'Relative mRNA expression')
@@ -268,8 +263,7 @@ tst1 <- pcr_test(ct4,
          reference_group = 'control',
          test = 't.test')
 
-knitr::kable(tst1,
-             caption = '\\label{table:table14} t-test summary')
+knitr::kable(tst1, caption = 'Figure 14: t-test summary')
 
 ## ----testing_wilcox------------------------------------------------------
 # test using wilcox.test
@@ -279,8 +273,7 @@ tst2 <- pcr_test(ct4,
          reference_group = 'control',
          test = 'wilcox.test')
 
-knitr::kable(tst2,
-             caption = '\\label{table:table15} Wilcoxon test summary')
+knitr::kable(tst2, caption = 'Figure 15: Wilcoxon test summary')
 
 ## ----testing_lm----------------------------------------------------------
 # testing using lm
@@ -290,8 +283,7 @@ tst3 <- pcr_test(ct4,
          reference_group = 'control',
          test = 'lm')
 
-knitr::kable(tst3,
-             caption = '\\label{table:table16} Linear regression summary')
+knitr::kable(tst3, caption = 'Figure 16: Linear regression summary')
 
 ## ----advanced_designs----------------------------------------------------
 # testing advanced designs using a model matrix
@@ -306,8 +298,7 @@ res <- pcr_test(ct4,
                 model_matrix = mm,
                 test = 'lm')
 
-knitr::kable(res,
-             caption = "\\label{table:table17} Testing advanced hypotheses")
+knitr::kable(res, caption = "Figure 17: Testing advanced hypotheses")
 
 ## ----varying_rna_quality-------------------------------------------------
 # using linear models to check the effect of RNA quality
@@ -323,8 +314,7 @@ res <- pcr_test(ct4,
                 model_matrix = mm,
                 test = 'lm')
 
-knitr::kable(res,
-             caption = "\\label{table:table18} Check the effect of varying RNA quality")
+knitr::kable(res, caption = "Figure 18: Check the effect of varying RNA quality")
 
 ## ----multiple_runs-------------------------------------------------------
 # using linear model to check the effects of mixing separate runs
@@ -339,8 +329,7 @@ res <- pcr_test(ct4,
                 model_matrix = mm,
                 test = 'lm')
 
-knitr::kable(res,
-             caption = "\\label{table:table19} Combining data from multiple qPCR runs")
+knitr::kable(res, caption = "Figure 19: Combining data from multiple qPCR runs")
 
 ## ----citation, eval=FALSE------------------------------------------------
 #  citation("pcr")

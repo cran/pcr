@@ -1,6 +1,6 @@
-f6dada714f3c4a454a9886c75ad997f3 *DESCRIPTION
+5f9574189de60c5170568d4741144882 *DESCRIPTION
 ea553e77dbe96908d065f94f01c4d15f *NAMESPACE
-853db74857cdc1d34f755a4cc9aa9fc8 *NEWS.md
+830b6931626f9c015715ac675c74c4ee *NEWS.md
 0d795340580a65e60c4f0804ad581ad5 *R/analyses_fun.R
 ff87487b77362ec21c44c55187e41ceb *R/assessment_fun.R
 32d7dddd567253a0cd48860dc3eec139 *R/helper_fun.R
@@ -8,15 +8,15 @@ ff87487b77362ec21c44c55187e41ceb *R/assessment_fun.R
 de2d9f07819847e2e2b0635a0067f8c7 *R/pcr.R
 c7176d1aef65c8ece5824813dca8dec3 *R/plotting_fun.R
 329b19db6b106c7397755898e6a54928 *R/testing_fun.R
-4938ce91966b71b31dddd3b3eef165a8 *README.md
-9c2036ff1a12a4497201ac0bc27d4c3c *build/vignette.rds
+a7ac3e7da673d7ec26444b25fe14ecc1 *README.md
+e63d5f9bb29497b288d0357a5dd27343 *build/vignette.rds
 40df21205fb8591640a71fe9f2bc2317 *data/ct1.rda
 8e76283c063055053ac939ecf15c5010 *data/ct2.rda
 582b161351f2c3fab82739a0097c983e *data/ct3.rda
 2ed2c0fdfab6b68675e68f734b59f6d3 *data/ct4.rda
-903cf978c642e735ff7810f67eed7f9a *inst/doc/qpcr_analysis.R
-512ef41dc022f91ad1f661c342843c96 *inst/doc/qpcr_analysis.Rmd
-7159e7fdc262df420a427ba87ac3f98b *inst/doc/qpcr_analysis.pdf
+02940ab001ba5ba985b998895a027bf7 *inst/doc/qpcr_analysis.R
+d99a0c9f7906c39b6da2a4076e88ebe8 *inst/doc/qpcr_analysis.Rmd
+68449388f3afe60a0e465afddc4fcdf9 *inst/doc/qpcr_analysis.html
 2ca830f4ca45b10974082bd5c2709f09 *inst/extdata/ct1.csv
 795cac6df1881f2e7879a2c8ee19a43b *inst/extdata/ct2.csv
 e3b44cdffd971d1de4e20ce496ca61cf *inst/extdata/ct3.csv
@@ -46,4 +46,4 @@ bcc823816a061d1e5bd750c19f1556d9 *tests/testthat/test_assessment_fun.R
 0f149a6fbcfed86aae9428d70116b60e *tests/testthat/test_helper_fun.R
 4918958e8a0d28d87a6f9c89b0ab8bb7 *tests/testthat/test_plotting_fun.R
 4f4cddeb661989266c0e89d117f31922 *tests/testthat/test_testing_fun.R
-512ef41dc022f91ad1f661c342843c96 *vignettes/qpcr_analysis.Rmd
+d99a0c9f7906c39b6da2a4076e88ebe8 *vignettes/qpcr_analysis.Rmd

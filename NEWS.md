@@ -10,3 +10,7 @@
 
   - Added plotting option to `pcr_analyze`  
   - Revised documentation and vignette  
+
+# pcr 1.1.1
+
+  - Change vignette to html
