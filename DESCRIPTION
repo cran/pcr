@@ -1,5 +1,5 @@
 Package: pcr
-Version: 1.1.1
+Version: 1.1.2
 Title: Analyzing Real-Time Quantitative PCR Data
 Description: Calculates the amplification efficiency and curves from real-time 
   quantitative PCR (Polymerase Chain Reaction) data. Estimates the relative 
@@ -17,12 +17,12 @@ Depends: R (>= 3.4.0)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-Imports: devtools, magrittr, dplyr, tidyr, purrr, readr, ggplot2, broom
+Imports: devtools, magrittr, dplyr, tidyr, purrr, readr, ggplot2
 Suggests: testthat, knitr, rmarkdown, covr, cowplot
 VignetteBuilder: knitr
 License: GPL-3
 NeedsCompilation: no
-Packaged: 2018-06-23 08:06:25 UTC; rstudio
+Packaged: 2018-07-24 04:03:15 UTC; rstudio
 Author: Mahmoud Ahmed [aut, cre]
 Repository: CRAN
-Date/Publication: 2018-06-23 08:21:22 UTC
+Date/Publication: 2018-07-24 05:20:09 UTC
