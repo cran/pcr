@@ -1,19 +1,19 @@
-## ----setup, include=FALSE------------------------------------------------
+## ----setup, include=FALSE-----------------------------------------------------
 knitr::opts_chunk$set(error = FALSE, message = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 3.5)
 
-## ----install_CRAN, eval=FALSE--------------------------------------------
+## ----install_CRAN, eval=FALSE-------------------------------------------------
 #  # install package CRAN
 #  install.packages('pcr')
 
-## ----install_github, eval=FALSE------------------------------------------
+## ----install_github, eval=FALSE-----------------------------------------------
 #  # install package from github
 #  devtools::install_github('MahShaaban/pcr')
 
-## ----load_pcr------------------------------------------------------------
+## ----load_pcr-----------------------------------------------------------------
 # load required libraries
 library(pcr)
 
-## ----analyze-------------------------------------------------------------
+## ----analyze------------------------------------------------------------------
 # default mode delta_delta_ct
 ## locate and read raw ct data
 fl <- system.file('extdata', 'ct1.csv', package = 'pcr')
@@ -31,7 +31,7 @@ res <- pcr_analyze(ct1,
   
 res
 
-## ----assess--------------------------------------------------------------
+## ----assess-------------------------------------------------------------------
 ## locate and read data
 fl <- system.file('extdata', 'ct3.csv', package = 'pcr')
 ct3 <- read.csv(fl)
@@ -46,12 +46,12 @@ res <- pcr_assess(ct3,
                   method = 'efficiency')
 res
 
-## ----load_libraries------------------------------------------------------
+## ----load_libraries-----------------------------------------------------------
 library(pcr)
 library(ggplot2)
 library(cowplot)
 
-## ----calculate_efficiency------------------------------------------------
+## ----calculate_efficiency-----------------------------------------------------
 ## locate and read data
 fl <- system.file('extdata', 'ct3.csv', package = 'pcr')
 ct3 <- read.csv(fl)
@@ -77,14 +77,14 @@ gg +
   theme(strip.background = element_blank(),
         strip.text = element_blank())
 
-## ----calculating_curve---------------------------------------------------
+## ----calculating_curve--------------------------------------------------------
 ## calculate standard curve
 res <- pcr_assess(ct3,
                   amount = amount,
                   method = 'standard_curve')
 knitr::kable(res, caption = 'Table 8: Standard curves of c-myc and GAPDH')
 
-## ----retain_variable-----------------------------------------------------
+## ----retain_variable----------------------------------------------------------
 intercept <- res$intercept
 slope <- res$slope
 
@@ -96,7 +96,7 @@ gg <- pcr_assess(ct3,
 gg + 
   labs(x = 'Log 10 amount', y = 'CT value')
 
-## ----ddct_separate_tube--------------------------------------------------
+## ----ddct_separate_tube-------------------------------------------------------
 # default mode delta_delta_ct
 ## locate and read raw ct data
 fl <- system.file('extdata', 'ct1.csv', package = 'pcr')
@@ -114,7 +114,7 @@ res1 <- pcr_analyze(ct1,
 
 knitr::kable(res1, caption = 'Table 9: Double delta $C_T$ method (separate tubes)')
 
-## ----ddct_same_tube------------------------------------------------------
+## ----ddct_same_tube-----------------------------------------------------------
 # calculate all values and errors in one step
 ## mode == 'same_tube'
 res2 <- pcr_analyze(ct2,
@@ -125,7 +125,7 @@ res2 <- pcr_analyze(ct2,
 
 knitr::kable(res2, caption = 'Table 10: Double delta $C_T$ method (same tube)')
 
-## ----plot_ddct_separate_tube---------------------------------------------
+## ----plot_ddct_separate_tube--------------------------------------------------
 gg1 <- pcr_analyze(ct1,
   group_var = group_var,
   reference_gene = 'GAPDH',
@@ -134,7 +134,7 @@ gg1 <- pcr_analyze(ct1,
   labs(x = '', y = 'Relative mRNA expression') +
   ggtitle(label = 'Separate tubes')
 
-## ----plote_ddct_same_tube------------------------------------------------
+## ----plote_ddct_same_tube-----------------------------------------------------
 gg2 <- pcr_analyze(ct2,
   group_var = group_var,
   reference_gene = 'GAPDH',
@@ -147,7 +147,7 @@ gg2 <- pcr_analyze(ct2,
 ## ----plot_expression, fig.width=8, fig.cap='Figure 3: Relative expression of c-myc using double delta $C_T$'----
 plot_grid(gg1, gg2)
 
-## ----make_up_dataset-----------------------------------------------------
+## ----make_up_dataset----------------------------------------------------------
 ## example to check fold change of control gens
 ## locate and read file
 fl <- system.file('extdata', 'ct1.csv', package = 'pcr')
@@ -162,7 +162,7 @@ pcr_hk <- data.frame(
 ## add grouping variable
 group_var <- rep(c('brain', 'kidney'), each = 6)
 
-## ----dct_method----------------------------------------------------------
+## ----dct_method---------------------------------------------------------------
 # delta_ct method
 ## calculate caliberation
 res <- pcr_analyze(pcr_hk,
@@ -182,7 +182,7 @@ pcr_analyze(pcr_hk,
         legend.direction = 'horizontal') +
   labs(x = '', y = 'Relative fold change')
 
-## ----standard_separate_tube----------------------------------------------
+## ----standard_separate_tube---------------------------------------------------
 ## calculate standard amounts and error
 res1 <- pcr_analyze(ct1,
                    group_var = group_var,
@@ -194,7 +194,7 @@ res1 <- pcr_analyze(ct1,
 
 knitr::kable(res1, caption = 'Table 12: Standard curve method (separate tubes)')
 
-## ----standard_same_tube--------------------------------------------------
+## ----standard_same_tube-------------------------------------------------------
 ## calculate standard amounts and error
 res2 <- pcr_analyze(ct2,
                    group_var = group_var,
@@ -207,7 +207,7 @@ res2 <- pcr_analyze(ct2,
 
 knitr::kable(res2, caption = 'Table 13: Standard curve method (same tube)')
 
-## ----plot_standard_separate_tube-----------------------------------------
+## ----plot_standard_separate_tube----------------------------------------------
 gg1 <- pcr_analyze(ct1,
                    group_var = group_var,
                    reference_gene = 'GAPDH',
@@ -219,7 +219,7 @@ gg1 <- pcr_analyze(ct1,
   labs(x = '', y = 'Relative mRNA expression') +
   ggtitle(label = 'Separate tubes')
 
-## ----plot_standard_same_tube---------------------------------------------
+## ----plot_standard_same_tube--------------------------------------------------
 gg2 <- pcr_analyze(ct2,
                    group_var = group_var,
                    reference_gene = 'GAPDH',
@@ -235,7 +235,7 @@ gg2 <- pcr_analyze(ct2,
 ## ----plot_expression2, fig.width=8, fig.cap='Figure 5: Relative expression of c-myc using the standard curve'----
 plot_grid(gg1, gg2)
 
-## ----testing_data--------------------------------------------------------
+## ----testing_data-------------------------------------------------------------
 # locate and read data
 fl <- system.file('extdata', 'ct4.csv', package = 'pcr')
 ct4 <- read.csv(fl)
@@ -243,7 +243,7 @@ ct4 <- read.csv(fl)
 # make group variable
 group <- rep(c('control', 'treatment'), each = 12)
 
-## ----analyze_testing_data------------------------------------------------
+## ----analyze_testing_data-----------------------------------------------------
 # analyze the testing data
 res <- pcr_analyze(ct4, 
             group_var = group,
@@ -255,7 +255,7 @@ ggplot(res, aes(x = group, y = relative_expression)) +
   geom_col() +
   labs(x = '', y = 'Relative mRNA expression')
 
-## ----testing_t.test------------------------------------------------------
+## ----testing_t.test-----------------------------------------------------------
 # test using t-test
 tst1 <- pcr_test(ct4,
          group_var = group,
@@ -265,7 +265,7 @@ tst1 <- pcr_test(ct4,
 
 knitr::kable(tst1, caption = 'Table 14: t-test summary')
 
-## ----testing_wilcox------------------------------------------------------
+## ----testing_wilcox-----------------------------------------------------------
 # test using wilcox.test
 tst2 <- pcr_test(ct4,
          group_var = group,
@@ -275,7 +275,7 @@ tst2 <- pcr_test(ct4,
 
 knitr::kable(tst2, caption = 'Table 15: Wilcoxon test summary')
 
-## ----testing_lm----------------------------------------------------------
+## ----testing_lm---------------------------------------------------------------
 # testing using lm
 tst3 <- pcr_test(ct4,
          group_var = group,
@@ -285,7 +285,7 @@ tst3 <- pcr_test(ct4,
 
 knitr::kable(tst3, caption = 'Table 16: Linear regression summary')
 
-## ----advanced_designs----------------------------------------------------
+## ----advanced_designs---------------------------------------------------------
 # testing advanced designs using a model matrix
 # make a model matrix
 group <- relevel(factor(group), ref = 'control')
@@ -300,7 +300,7 @@ res <- pcr_test(ct4,
 
 knitr::kable(res, caption = "Table 17: Testing advanced hypotheses")
 
-## ----varying_rna_quality-------------------------------------------------
+## ----varying_rna_quality------------------------------------------------------
 # using linear models to check the effect of RNA quality
 # make a model matrix
 group <- relevel(factor(group), ref = 'control')
@@ -316,7 +316,7 @@ res <- pcr_test(ct4,
 
 knitr::kable(res, caption = "Table 18: Check the effect of varying RNA quality")
 
-## ----multiple_runs-------------------------------------------------------
+## ----multiple_runs------------------------------------------------------------
 # using linear model to check the effects of mixing separate runs
 # make a model matrix
 group <- relevel(factor(group), ref = 'control')
@@ -331,6 +331,6 @@ res <- pcr_test(ct4,
 
 knitr::kable(res, caption = "Table 19: Combining data from multiple qPCR runs")
 
-## ----citation, eval=FALSE------------------------------------------------
+## ----citation, eval=FALSE-----------------------------------------------------
 #  citation("pcr")
 
